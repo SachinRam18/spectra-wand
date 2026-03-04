@@ -1,0 +1,36 @@
+# SpectraWand Backend — Python Dependencies
+# Install with: pip install -r requirements.txt
+# For GPU: install PyTorch with CUDA first:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+
+# ── Web Framework ───────────────────────────────────────────────────────
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+
+# ── Configuration ───────────────────────────────────────────────────────
+pydantic-settings==2.7.1
+
+# ── AI / ML ─────────────────────────────────────────────────────────────
+torch>=2.1.0
+torchvision>=0.16.0
+diffusers>=0.31.0
+transformers>=4.46.0
+accelerate>=1.2.0
+safetensors>=0.4.0
+controlnet-aux>=0.0.9
+
+# ── Real-ESRGAN upscaling ──────────────────────────────────────────────
+realesrgan>=0.3.0
+basicsr>=1.4.2
+gfpgan>=1.3.8
+
+# ── Image Processing ───────────────────────────────────────────────────
+Pillow>=10.0.0
+opencv-python-headless>=4.8.0
+
+# ── Logging ─────────────────────────────────────────────────────────────
+loguru>=0.7.0
+
+# ── Optional: Memory-efficient attention ────────────────────────────────
+# xformers>=0.0.23  # Uncomment if your CUDA version supports it
