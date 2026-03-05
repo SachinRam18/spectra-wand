@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { gradeImage } from './services/api';
 import BgAmbient from './components/BgAmbient';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -10,10 +11,12 @@ import Footer from './components/Footer';
 
 function App() {
   const [theme, setTheme] = useState('dark');
+  const [uploadedFile, setUploadedFile] = useState(null);
   const [uploadedSrc, setUploadedSrc] = useState(null);
   const [gradedSrc, setGradedSrc] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [promptValue, setPromptValue] = useState('');
+  const [errorMsg, setErrorMsg] = useState(null);
   const flashRef = useRef(null);
 
   useEffect(() => {
@@ -34,6 +37,8 @@ function App() {
   const handleUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    setUploadedFile(file);
+    setErrorMsg(null);
     const reader = new FileReader();
     reader.onload = (ev) => {
       setUploadedSrc(ev.target.result);
@@ -43,14 +48,30 @@ function App() {
     reader.readAsDataURL(file);
   };
 
-  const doGrade = () => {
-    if (!uploadedSrc) return;
+  const doGrade = async () => {
+    if (!uploadedFile) {
+      alert('Please upload an image first.');
+      return;
+    }
+    if (!promptValue.trim()) {
+      alert('Please enter a color grading prompt.');
+      return;
+    }
     setIsProcessing(true);
     setGradedSrc(null);
-    setTimeout(() => {
+    setErrorMsg(null);
+    try {
+      const data = await gradeImage(uploadedFile, promptValue.trim());
+      // Backend returns base64 — convert to data URL
+      const mimeType = 'image/jpeg';
+      setGradedSrc(`data:${mimeType};base64,${data.image_base64}`);
+    } catch (err) {
+      console.error('Grading failed:', err);
+      setErrorMsg(err.message || 'Something went wrong');
+      alert(`Grading failed: ${err.message}`);
+    } finally {
       setIsProcessing(false);
-      setGradedSrc(uploadedSrc);
-    }, 3000);
+    }
   };
 
   const handleTagClick = (tag) => {

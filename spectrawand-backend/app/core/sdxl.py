@@ -146,15 +146,16 @@ class SDXLColorGrader:
         img_strength = strength or settings.DEFAULT_STRENGTH
 
         neg_prompt = negative_prompt or (
-            "blurry, low quality, artifacts, distorted, noisy, "
-            "overexposed, underexposed, watermark, text, deformed"
+            "blurry, artifacts, distorted, watermark, text, deformed, "
+            "different composition, changed face, altered structure, "
+            "different person, added objects, removed objects"
         )
 
-        # Enhance the prompt for color grading context
+        # Enhance the prompt for COLOR GRADING only — avoid image-quality
+        # terms like 'sharp focus, 8k' which bias SDXL toward regeneration
         enhanced_prompt = (
-            f"professional color graded photograph, {prompt}, "
-            "masterful color correction, cinematic lighting, "
-            "high quality, detailed, sharp focus, 8k"
+            f"color graded, {prompt}, cinematic color palette, "
+            "professional color correction, film color tones"
         )
 
         # Generator for reproducibility

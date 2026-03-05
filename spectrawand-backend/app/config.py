@@ -46,10 +46,10 @@ class Settings(BaseSettings):
     ENABLE_VAE_TILING: bool = True
 
     # ── Inference Defaults ──────────────────────────────────────────────
-    DEFAULT_NUM_STEPS: int = 30
-    DEFAULT_GUIDANCE_SCALE: float = 7.5
-    DEFAULT_CONTROLNET_SCALE: float = 0.55
-    DEFAULT_STRENGTH: float = 0.60  # img2img strength (0 = no change, 1 = full denoise)
+    DEFAULT_NUM_STEPS: int = 25
+    DEFAULT_GUIDANCE_SCALE: float = 5.0
+    DEFAULT_CONTROLNET_SCALE: float = 0.85
+    DEFAULT_STRENGTH: float = 0.20  # img2img strength (low = color-only, high = re-draws)
     DEFAULT_UPSCALE: bool = True
     MAX_OUTPUT_WIDTH: int = 3840  # 4K
     MAX_OUTPUT_HEIGHT: int = 2160

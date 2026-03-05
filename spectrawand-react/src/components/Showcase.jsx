@@ -64,7 +64,6 @@ function Showcase({ uploadedSrc, gradedSrc, isProcessing }) {
                                         alt="Graded"
                                         style={{
                                             display: 'block',
-                                            filter: 'saturate(1.4) contrast(1.1) brightness(0.95) hue-rotate(8deg) sepia(0.12)',
                                             animation: 'fadeIn .5s ease'
                                         }}
                                     />
