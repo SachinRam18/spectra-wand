@@ -13,7 +13,7 @@ from loguru import logger
 
 from diffusers import (
     ControlNetModel,
-    StableDiffusionXLControlNetImg2ImgPipeline,
+    StableDiffusionXLControlNetPipeline,
     AutoencoderKL,
 )
 from diffusers.schedulers import DPMSolverMultistepScheduler
@@ -61,7 +61,7 @@ class SDXLColorGrader:
                 cache_dir=settings.MODEL_CACHE_DIR,
             )
 
-            self.pipe = StableDiffusionXLControlNetImg2ImgPipeline.from_pretrained(
+            self.pipe = StableDiffusionXLControlNetPipeline.from_pretrained(
                 settings.SDXL_MODEL_ID,
                 controlnet=controlnet,
                 vae=vae,
@@ -173,12 +173,10 @@ class SDXLColorGrader:
                 result = self.pipe(
                     prompt=enhanced_prompt,
                     negative_prompt=neg_prompt,
-                    image=image,
-                    control_image=control_image,
+                    image=control_image,
                     num_inference_steps=steps,
                     guidance_scale=guidance,
                     controlnet_conditioning_scale=cn_scale,
-                    strength=img_strength,
                     generator=generator,
                 ).images[0]
 
