@@ -7,7 +7,7 @@
  * ⚠️  Update API_URL every time you restart the Colab/ngrok session.
  */
 
-const API_URL = "https://unnecessary-timika-supersecretively.ngrok-free.dev";
+const API_URL = ""; // now using Vite proxy in vite.config.js
 
 /**
  * Send an image + prompt to the backend for AI color grading.
@@ -20,6 +20,10 @@ export async function gradeImage(file, prompt) {
     const formData = new FormData();
     formData.append("image", file);        // backend expects field name "image"
     formData.append("prompt", prompt);
+    // For color grading ONLY, strength must be extremely low (0.10 - 0.20)
+    // Otherwise SDXL will fully redraw the image as a new character/scene
+    formData.append("strength", "0.15");
+    formData.append("controlnet_scale", "0.85");
 
     const res = await fetch(`${API_URL}/api/v1/grade`, {
         method: "POST",
