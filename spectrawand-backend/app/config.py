@@ -22,6 +22,7 @@ class Settings(BaseSettings):
         "http://localhost:5173",
         "http://localhost:3000",
         "http://127.0.0.1:5173",
+        "https://unnecessary-timika-supersecretively.ngrok-free.dev",
     ]
 
     # ── Directories ─────────────────────────────────────────────────────
@@ -41,7 +42,7 @@ class Settings(BaseSettings):
     # ── GPU / Inference ─────────────────────────────────────────────────
     DEVICE: str = "cuda"
     DTYPE: str = "float16"  # float16 | bfloat16 | float32
-    ENABLE_CPU_OFFLOAD: bool = False  # Use sequential CPU offload for low-VRAM
+    ENABLE_CPU_OFFLOAD: bool =  True  # Use sequential CPU offload for low-VRAM
     ENABLE_ATTENTION_SLICING: bool = True
     ENABLE_VAE_TILING: bool = True
 
