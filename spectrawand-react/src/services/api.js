@@ -20,10 +20,12 @@ export async function gradeImage(file, prompt) {
     const formData = new FormData();
     formData.append("image", file);        // backend expects field name "image"
     formData.append("prompt", prompt);
-    // For color grading ONLY, strength must be extremely low (0.10 - 0.20)
-    // Otherwise SDXL will fully redraw the image as a new character/scene
-    formData.append("strength", "0.15");
-    formData.append("controlnet_scale", "0.85");
+    // For color grading, we need a delicate balance:
+    // strength=0.15 is too low (no change made)
+    // strength=0.60 is too high (completely redraws the image/face)
+    // Let's use 0.45 strength with a very strong ControlNet (0.90) to hold the structure
+    formData.append("strength", "0.45");
+    formData.append("controlnet_scale", "0.90");
 
     const res = await fetch(`${API_URL}/api/v1/grade`, {
         method: "POST",
